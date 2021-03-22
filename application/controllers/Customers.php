@@ -47,18 +47,19 @@ class Customers extends Admin_Controller
 			$buttons = '';
 
 			if(in_array('viewBrand', $this->permission)) {
-				$buttons .= '<button type="button" class="btn btn-default" onclick="editCustomers('.$value['id'].')" data-toggle="modal" data-target="#editCustomersModal"><i class="fa fa-pencil"></i></button>';	
+				$buttons .= '<button type="button" class="btn btn-default" onclick="editCustomer('.$value['id'].')" data-toggle="modal" data-target="#editCustomerModal"><i class="fa fa-pencil"></i></button>';	
 			}
 			
 			if(in_array('deleteBrand', $this->permission)) {
-				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeCustomers('.$value['id'].')" data-toggle="modal" data-target="#removeCustomersModal"><i class="fa fa-trash"></i></button>
+				$buttons .= ' <button type="button" class="btn btn-default" onclick="removeCustomer('.$value['id'].')" data-toggle="modal" data-target="#removeCustomerModal"><i class="fa fa-trash"></i></button>
 				';
 			}				
 
 
 			$result['data'][$key] = array(
-				$value['nome'],
-				$value['rua'],
+				$value['id'],
+				$value['name'],
+				$value['street'],
 				$buttons
 			);
 		} // /foreach
@@ -90,8 +91,38 @@ class Customers extends Admin_Controller
 	*/
 	public function create()
 	{
+        	$data = array(
+        		'id' => null,
+        		'name' => $this->input->post('customer_name'),	
+				'tel' => $this->input->post('customer_tel'),	
+				'cel' => $this->input->post('customer_cel'),	
+				'email' => $this->input->post('customer_email'),	
+				'street' => $this->input->post('customer_street'),	
+				'district' => $this->input->post('customer_district'),	
+				'city' => $this->input->post('customer_city'),	
+				'cep' => $this->input->post('customer_cep'),
+				'province' => $this->input->post('customer_province'),	
+				'cpf-cnpj' => $this->input->post('customer_cpf-cnpj'),	
+				'rg-ie' => $this->input->post('customer_rg-ie'),	
+				'obs' => $this->input->post('customer_obs'),	
+			);
 
-		if(!in_array('createBrand', $this->permission)) {
+
+        	$create = $this->model_customers->create($data);
+        	
+			if($create == true) {
+        		$response['success'] = true;
+        		$response['messages'] = 'Succesfully created';
+        	} else {
+        		$response['success'] = false;
+        		$response['messages'] = 'Error in the database while creating the brand information';			
+        	}
+        
+
+        echo json_encode($response); 
+
+		//echo print_r($_POST[0],false);
+/* 		if(!in_array('createBrand', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
@@ -125,7 +156,7 @@ class Customers extends Admin_Controller
         	}
         }
 
-        echo json_encode($response);
+        echo json_encode($response); */
 
 	}
 
@@ -189,25 +220,30 @@ class Customers extends Admin_Controller
 			redirect('dashboard', 'refresh');
 		}
 		
+		//echo print_r($_POST,0);
 		$customer_id = $this->input->post('customer_id');
 		$response = array();
 		if($customer_id) {
 			$delete = $this->model_customers->remove($customer_id);
 
 			if($delete == true) {
+				//echo print_r('1');
 				$response['success'] = true;
 				$response['messages'] = "Removido com sucesso";	
 			}
 			else {
+				//echo print_r('2');
 				$response['success'] = false;
 				$response['messages'] = "Erro no banco de dados durante remoção";
 			}
 		}
 		else {
+			//echo print_r('3');
 			$response['success'] = false;
 			$response['messages'] = "Reinicie a página!";
 		}
 
+		//echo print_r($response);
 		echo json_encode($response);
 	}
 

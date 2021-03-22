@@ -1,7 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  <?php echo print_r($user_permission)?>
+ 
   <section class="content-header">
     <h1>
       Manage
@@ -35,7 +35,7 @@
         <?php endif; ?>
 
         <?php if(in_array('createBrand', $user_permission)): ?>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#addCustomersModal">Inserir Cliente</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#addCustomerModal">Inserir Cliente</button>
           <br /> <br />
         <?php endif; ?>
 
@@ -48,6 +48,7 @@
             <table id="manageTable1" class="table table-bordered table-striped">
               <thead>
               <tr>
+              <th>ID</th>
                 <th>Nome do Cliente</th>
                 <th>Endereço</th>
                 <?php if(in_array('updateBrand', $user_permission) || in_array('deleteBrand', $user_permission)): ?>
@@ -74,7 +75,7 @@
 
 <?php if(in_array('createBrand', $user_permission)): ?>
 <!-- create customers modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="addCustomersModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="addCustomerModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -82,7 +83,7 @@
         <h4 class="modal-title">Inserir Cliente</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('customers/create') ?>" method="post" id="createCustomersForm">
+      <form role="form" action="<?php echo base_url('customers/create') ?>" method="post" id="createCustomerForm">
 
         <div class="modal-body">
 
@@ -143,7 +144,7 @@
 
 <?php if(in_array('updateBrand', $user_permission)): ?>
 <!-- edit customers modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="editCustomersModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="editCustomerModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -151,7 +152,7 @@
         <h4 class="modal-title">Editar Cliente</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('customers/update') ?>" method="post" id="updateCustomersForm">
+      <form role="form" action="<?php echo base_url('customers/update') ?>" method="post" id="updateCustomerForm">
 
         <div class="modal-body">
           <div id="messages"></div>
@@ -184,7 +185,7 @@
 
 <?php if(in_array('deleteBrand', $user_permission)): ?>
 <!-- remove customer modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="removeCustomersModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="removeCustomerModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -192,7 +193,7 @@
         <h4 class="modal-title">Remoção de Cliente</h4>
       </div>
 
-      <form role="form" action="<?php echo base_url('customers/remove') ?>" method="post" id="removeCustomersForm">
+      <form role="form" action="<?php echo base_url('customers/remove') ?>" method="post" id="removeCustomerForm">
         <div class="modal-body">
           <p>Deseja realmente remover o cliente?</p>
         </div>
@@ -253,11 +254,11 @@ $(document).ready(function() {
 
 
           // hide the modal
-          $("#addCustomersModal").modal('hide');
+          $("#addCustomerModal").modal('hide');
 
           // reset the form
-          $("#createCustomersForm")[0].reset();
-          $("#createCustomersForm .form-group").removeClass('has-error').removeClass('has-success');
+          $("#createCustomerForm")[0].reset();
+          $("#createCustomerForm .form-group").removeClass('has-error').removeClass('has-success');
 
         } else {
 
@@ -299,7 +300,7 @@ function editCustomers(id)
       $("#edit_endereco").val(response.active);
 
       // submit the edit from 
-      $("#updateCustomersForm").unbind('submit').bind('submit', function() {
+      $("#updateCustomerForm").unbind('submit').bind('submit', function() {
         var form = $(this);
 
         // remove the text-danger
@@ -322,9 +323,9 @@ function editCustomers(id)
 
 
               // hide the modal
-              $("#editCustomersModal").modal('hide');
+              $("#editCustomerModal").modal('hide');
               // reset the form 
-              $("#updateCustomersForm .form-group").removeClass('has-error').removeClass('has-success');
+              $("#updateCustomerForm .form-group").removeClass('has-error').removeClass('has-success');
 
             } else {
 
@@ -360,7 +361,7 @@ function editCustomers(id)
 function removeCustomers(id)
 {
   if(id) {
-    $("#removeCustomersForm").on('submit', function() {
+    $("#removeCustomerForm").on('submit', function() {
 
       var form = $(this);
 
@@ -383,7 +384,7 @@ function removeCustomers(id)
             '</div>');
 
             // hide the modal
-            $("#removeCustomersModal").modal('hide');
+            $("#removeCustomerModal").modal('hide');
 
           } else {
 
