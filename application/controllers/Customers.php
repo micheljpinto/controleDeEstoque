@@ -89,75 +89,63 @@ class Customers extends Admin_Controller
 	* and if the validation is successfully then it inserts the data into the database 
 	* and returns the json format operation messages
 	*/
-	public function create()
-	{
-        	$data = array(
-        		'id' => null,
-        		'name' => $this->input->post('customer_name'),	
-				'tel' => $this->input->post('customer_tel'),	
-				'cel' => $this->input->post('customer_cel'),	
-				'email' => $this->input->post('customer_email'),	
-				'street' => $this->input->post('customer_street'),	
-				'district' => $this->input->post('customer_district'),	
-				'city' => $this->input->post('customer_city'),	
-				'cep' => $this->input->post('customer_cep'),
-				'province' => $this->input->post('customer_province'),	
-				'cpf-cnpj' => $this->input->post('customer_cpf-cnpj'),	
-				'rg-ie' => $this->input->post('customer_rg-ie'),	
-				'obs' => $this->input->post('customer_obs'),	
-			);
-
-
-        	$create = $this->model_customers->create($data);
-        	
-			if($create == true) {
-        		$response['success'] = true;
-        		$response['messages'] = 'Succesfully created';
-        	} else {
-        		$response['success'] = false;
-        		$response['messages'] = 'Error in the database while creating the brand information';			
-        	}
-        
-
-        echo json_encode($response); 
-
-		//echo print_r($_POST[0],false);
-/* 		if(!in_array('createBrand', $this->permission)) {
+	public function create() {
+		
+		if(!in_array('createBrand', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
-
-		$response = array();
-
-		$this->form_validation->set_rules('customers_name', 'Customer name', 'trim|required');
-		$this->form_validation->set_rules('active', 'Active', 'trim|required');
-
-		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>');
-
-        if ($this->form_validation->run() == TRUE) {
-        	$data = array(
-        		'name' => $this->input->post('customers_name'),
-        		'active' => $this->input->post('active'),	
-        	);
-
-        	$create = $this->model_customers->create($data);
-        	if($create == true) {
-        		$response['success'] = true;
-        		$response['messages'] = 'Succesfully created';
-        	}
-        	else {
-        		$response['success'] = false;
-        		$response['messages'] = 'Error in the database while creating the brand information';			
-        	}
-        }
-        else {
-        	$response['success'] = false;
-        	foreach ($_POST as $key => $value) {
+		$response=array();
+		$varTest=strtoupper($_POST['customer_name']);
+		 
+ 		$this->form_validation->set_rules('customer_name', 'customer_name', 'trim|required');
+		$this->form_validation->set_rules('customer_email', 'customer_email', 'trim|required');
+		
+		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>'); 
+		
+		if ($this->form_validation->run() === true) {
+			//Verify if exists other customer with same name or other
+			$test= $this->model_customers->getCustomersDataByName($varTest);
+			
+			if(!$test){
+				$data = array(
+					'id' => null,
+					'name' => strtoupper($this->input->post('customer_name')),	
+					'tel' => $this->input->post('customer_tel'),	
+					'cel' => $this->input->post('customer_cel'),	
+					'email' => $this->input->post('customer_email'),	
+					'street' => $this->input->post('customer_street'),	
+					'district' => $this->input->post('customer_district'),
+					'cep' => $this->input->post('customer_cep'),	
+					'city' => $this->input->post('customer_city'),	
+					'province' => $this->input->post('customer_province'),	
+					'cpf-cnpj' => $this->input->post('customer_cpf-cnpj'),	
+					'rg-ie' => $this->input->post('customer_rg-ie'),	
+					'obs' => $this->input->post('customer_obs'),	
+				);
+				$create = $this->model_customers->create($data);
+			} else {
+				$create = 2;
+			}
+				
+			if($create===true) {
+				$response['success'] = true;
+				$response['messages'] = 'Registro salvo com sucesso';			
+			} else if($create == 2) {
+				$response['success'] = false;
+				$response['messages'] = 'Cadastro já existente no banco de dados';
+			} else {
+				$response['success'] = false;
+				$response['messages'] = 'Error no banco de dados ao gravar registro';			
+			} 
+		
+		}  else {
+			$response['success'] = false;
+			$errors= array(validation_errors());
+			foreach ($_POST as $key => $value) {
         		$response['messages'][$key] = form_error($key);
-        	}
-        }
-
-        echo json_encode($response); */
-
+        	}				
+		}
+        echo json_encode($response); 
 	}
 
 	/*
@@ -165,8 +153,7 @@ class Customers extends Admin_Controller
 	* and if the validation is successfully then it updates the data into the database 
 	* and returns the json format operation messages
 	*/
-	public function update($id)
-	{
+	public function update($id){
 		if(!in_array('updateBrand', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
@@ -214,14 +201,14 @@ class Customers extends Admin_Controller
 	* It removes the brand information from the database 
 	* and returns the json format operation messages
 	*/
-	public function remove()
-	{
+	public function remove(){
+		
 		if(!in_array('deleteBrand', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 		
-		//echo print_r($_POST,0);
 		$customer_id = $this->input->post('customer_id');
+		
 		$response = array();
 		if($customer_id) {
 			$delete = $this->model_customers->remove($customer_id);
@@ -230,15 +217,11 @@ class Customers extends Admin_Controller
 				//echo print_r('1');
 				$response['success'] = true;
 				$response['messages'] = "Removido com sucesso";	
-			}
-			else {
-				//echo print_r('2');
+			} else {
 				$response['success'] = false;
 				$response['messages'] = "Erro no banco de dados durante remoção";
 			}
-		}
-		else {
-			//echo print_r('3');
+		} else {
 			$response['success'] = false;
 			$response['messages'] = "Reinicie a página!";
 		}

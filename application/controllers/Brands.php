@@ -116,8 +116,7 @@ class Brands extends Admin_Controller
         		$response['success'] = false;
         		$response['messages'] = 'Error in the database while creating the brand information';			
         	}
-        }
-        else {
+        } else {
         	$response['success'] = false;
         	foreach ($_POST as $key => $value) {
         		$response['messages'][$key] = form_error($key);

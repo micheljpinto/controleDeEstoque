@@ -45,7 +45,7 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table id="manageTable1" class="table table-bordered table-striped">
+            <table id="manageTable" class="table table-bordered table-striped">
               <thead>
               <tr>
               <th>ID</th>
@@ -84,49 +84,69 @@
       </div>
 
       <form role="form" action="<?php echo base_url('customers/create') ?>" method="post" id="createCustomerForm">
-
-        <div class="modal-body">
+      
+              <div class="modal-body">
 
           <div class="form-group">
             <label for="customer_name">Nome / Razão social</label>
-            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Digite aqui o nome" autocomplete="off" required="">
+            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Digite aqui o nome" autocomplete="off" >
+          </div>
+
+          <div class="form-group">
+            <label for="customer_tel">Tel</label>
+            <input type="tel" class="form-control" id="customer_tel" name="customer_tel" placeholder="Digite aqui o nome" autocomplete="off" >
+          </div>
+
+          <div class="form-group">
+            <label for="customer_cel">Cel</label>
+            <input type="tel" class="form-control" id="customer_cel" name="customer_cel" placeholder="Digite aqui o núm. do celular" autocomplete="off" >
           </div>
 
           <div class="form-group">
             <label for="customer_email">Email</label>
-            <input type="email" class="form-control" id="customer_email" name="customer_email" placeholder="Digite aqui o nome" autocomplete="off" required="" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title= "Formato de email base é nome@dominio">
+            <input type="text" class="form-control" id="customer_email" name="customer_email" placeholder="Digite aqui o email" autocomplete="off" >
           </div>
 
-          
           <div class="form-group">
             <label for="customer_street">Rua</label>
             <input type="text" class="form-control" id="customer_street" name="customer_street" placeholder="Digite aqui a rua ou travessa" autocomplete="off">
           </div>
-          <div class="form-group">
-            <label for="customer_complement">Complemento</label>
-            <input type="text" class="form-control" id="customer_complement" name="customer_complement" placeholder="Digite aqui número, interfone" autocomplete="off" maxLenght="15">
-          </div>
+
           <div class="form-group">
             <label for="customer_district">Bairro</label>
-            <input type="text" class="form-control" id="customer_bairro" name="customer_district" placeholder="Bairro" autocomplete="off">
+            <input type="text" class="form-control" id="customer_district" name="customer_district" placeholder="Bairro" autocomplete="off">
           </div>
+
+          <div class="form-group">
+            <label for="customer_cep">CEP</label>
+            <input type="number" class="form-control" id="customer_cep" name="customer_cep" placeholder="Digite aqui o CEP">
+          </div>
+
           <div class="form-group">
             <label for="customer_city">Cidade</label>
-            <input type="text" class="form-control" id="customers_city" name="customers_city" placeholder="Digite aqui a cidade" patern="[A-Za-z]{15}" title="Apenas letras com no máximo 15 caracteres" autocomplete="off" >
+            <input type="text" class="form-control" id="customer_city" name="customer_city" placeholder="Digite aqui a cidade" patern="[A-Za-z]{15}" title="Apenas letras com no máximo 15 caracteres" autocomplete="off" >
           </div>
 
           <div class="form-group">
-            <label for="customer_state">Estado</label>
-            <input type="text" class="form-control" id="customers_cidade" name="customers_state" placeholder="Digite aqui o estado" autocomplete="off">
+            <label for="customer_province">Estado</label>
+            <input type="text" class="form-control" id="customer_province" name="customer_province" placeholder="Digite aqui o estado" autocomplete="off">
           </div>
 
           <div class="form-group">
-            <label for="active">Status</label>
-            <select class="form-control" id="active" name="active">
-              <option value="1">Active</option>
-              <option value="2">Inactive</option>
-            </select>
+            <label for="customer_cpf-cnpj">CPF ou CNPJ</label>
+            <input type="number" class="form-control" id="customer_cpf-cnpj" name="customer_cpf-cnpj" placeholder="Digite aqui seu CPF" autocomplete="off">
           </div>
+
+          <div class="form-group">
+            <label for="customer_rg-ie">RG ou IE</label>
+            <input type="number" class="form-control" id="customer_rg-ie" name="customer_rg-ie" placeholder="Digite aqui seu CPF" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="customer_obs">Observação</label>
+            <input type="text" class="form-control" id="customer_obs" name="customer_obs" placeholder="Digite aqui o estado" autocomplete="off">
+          </div>
+   
         </div>
 
         <div class="modal-footer">
@@ -158,12 +178,12 @@
           <div id="messages"></div>
 
           <div class="form-group">
-            <label for="edit_customers_name">Brand Name</label>
-            <input type="text" class="form-control" id="edit_customers_name" name="edit_customers_name" placeholder="Enter customers name" autocomplete="off">
+            <label for="edit_customer_name">Brand Name</label>
+            <input type="text" class="form-control" id="edit_customer_name" name="edit_customer_name" placeholder="Enter customers name" autocomplete="off">
           </div>
           <div class="form-group">
-            <label for="edit_aendereco">Status</label>
-            <select class="form-control" id="edit_active" name="edit_aendereco">
+            <label for="edit_endereco">Status</label>
+            <select class="form-control" id="edit_active" name="edit_endereco">
               <option value="1">Active</option>
               <option value="2">Inactive</option>
             </select>
@@ -199,7 +219,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Salve Alterações</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
       </form>
 
@@ -211,27 +231,20 @@
 
 
 <script type="text/javascript">
-var manageTable1;
+var manageTable;
 
-/*
-var activeItem= document.getElementById("customersNav"); 
-activeItem.addEventListenner('click',(e)=>{
-        e.preventDefault();
-        activeItem.classList.add('active');
-    });
- */
 $(document).ready(function() {
 
     $("#customerNav").addClass('active');
 
   // initialize the datatable 
-  manageTable1 = $('#manageTable1').DataTable({
+  manageTable = $('#manageTable').DataTable({
     'ajax': 'fetchCustomersData',
     'order': []
   }); 
 
   // submit the create from 
-  $("#createCustomers").unbind('submit').on('submit', function() {
+  $("#createCustomer").unbind('submit').on('submit', function() {
     var form = $(this);
 
     // remove the text-danger
@@ -244,14 +257,13 @@ $(document).ready(function() {
       dataType: 'json',
       success:function(response) {
 
-        manageTable1.ajax.reload(null, false); 
+        manageTable.ajax.reload(null, false); 
 
         if(response.success === true) {
           $("#messages").html('<div class="alert alert-success alert-dismissible" role="alert">'+
             '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
             '<strong> <span class="glyphicon glyphicon-ok-sign"></span> </strong>'+response.messages+
           '</div>');
-
 
           // hide the modal
           $("#addCustomerModal").modal('hide');
@@ -265,7 +277,7 @@ $(document).ready(function() {
           if(response.messages instanceof Object) {
             $.each(response.messages, function(index, value) {
               var id = $("#"+index);
-
+              
               id.closest('.form-group')
               .removeClass('has-error')
               .removeClass('has-success')
@@ -275,7 +287,10 @@ $(document).ready(function() {
 
             });
           } else {
-            $("#messages").html(reponse);
+            $("#messages").html('<div class="alert alert-warning alert-dismissible" role="alert">'+
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+              '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+
+            '</div>');
             
           }
         }
@@ -288,15 +303,14 @@ $(document).ready(function() {
 
 });
 
-function editCustomers(id)
-{ 
+function editCustomer(id){ 
   $.ajax({
     url: 'fetchCustomersDataById/'+id,
     type: 'post',
     dataType: 'json',
     success:function(response) {
       window.alert(response);
-       $("#edit_customers_name").val(response.name);
+       $("#edit_customer_name").val(response.name);
       $("#edit_endereco").val(response.active);
 
       // submit the edit from 
@@ -358,13 +372,14 @@ function editCustomers(id)
   });
 }
 
-function removeCustomers(id)
+function removeCustomer(id)
 {
+  
   if(id) {
     $("#removeCustomerForm").on('submit', function() {
 
       var form = $(this);
-
+      
       // remove the text-danger
       $(".text-danger").remove();
 

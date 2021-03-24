@@ -29,10 +29,18 @@ class Model_customers extends CI_Model
 			$query = $this->db->query($sql);
 			return $query->result_array();
 		}
-	
+		public function getCustomersDataByName($var){
+			
+			$varOut='%'.strtoupper($var).'%';
+			$sql = "SELECT * FROM customers WHERE name LIKE ? ";
+			$query = $this->db->query($sql, array($varOut));
+			return ($query== true) ? true : false ;
+		}
 		public function create($data)
 		{
+			
 			if($data) {
+			
 				$insert = $this->db->insert('customers', $data);
 				return ($insert == true) ? true : false;
 			}
@@ -49,6 +57,7 @@ class Model_customers extends CI_Model
 	
 		public function remove($id)
 		{
+			//echo print_r($id);
 			if($id) {
 				$this->db->where('id', $id);
 				$delete = $this->db->delete('customers');
