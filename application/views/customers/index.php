@@ -244,7 +244,7 @@ $(document).ready(function() {
   }); 
 
   // submit the create from 
-  $("#createCustomer").unbind('submit').on('submit', function() {
+  $("#createCustomerForm").unbind('submit').on('submit', function() {
     var form = $(this);
 
     // remove the text-danger
@@ -273,7 +273,8 @@ $(document).ready(function() {
           $("#createCustomerForm .form-group").removeClass('has-error').removeClass('has-success');
 
         } else {
-
+          $("#addCustomerModal").modal('show');
+          
           if(response.messages instanceof Object) {
             $.each(response.messages, function(index, value) {
               var id = $("#"+index);
@@ -344,15 +345,16 @@ function editCustomer(id){
             } else {
 
               if(response.messages instanceof Object) {
-                $.each(response.messages, function(index, value) {
-                  var id = $("#"+index);
+                $.each(response['messages'], function(index, value) {
+                  console.log(value);
+                 /*  var id = $("#"+index);
 
                   id.closest('.form-group')
                   .removeClass('has-error')
                   .removeClass('has-success')
                   .addClass(value.length > 0 ? 'has-error' : 'has-success');
                   
-                  id.after(value);
+                  id.after(value); */
 
                 });
               } else {
@@ -372,8 +374,7 @@ function editCustomer(id){
   });
 }
 
-function removeCustomer(id)
-{
+function removeCustomer(id){
   
   if(id) {
     $("#removeCustomerForm").on('submit', function() {

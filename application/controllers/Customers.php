@@ -74,8 +74,7 @@ class Customers extends Admin_Controller
 	* returns the data into json format. 
 	* This function is invoked from the view page.
 	*/
-	public function fetchCustomersDataById($id)
-	{
+	public function fetchCustomersDataById($id)	{
 		if($id) {
 			$data = $this->model_customers->getCustomersData($id);
 			echo json_encode($data);
@@ -97,11 +96,12 @@ class Customers extends Admin_Controller
 		$response=array();
 		$varTest=strtoupper($_POST['customer_name']);
 		 
- 		$this->form_validation->set_rules('customer_name', 'customer_name', 'trim|required');
-		$this->form_validation->set_rules('customer_email', 'customer_email', 'trim|required');
+ 		$this->form_validation->set_rules('customer_name', 'Customer_name', 'trim|required');
+		$this->form_validation->set_rules('customer_email', 'Customer_email', 'trim|required');
 		
 		$this->form_validation->set_error_delimiters('<p class="text-danger">','</p>'); 
 		
+
 		if ($this->form_validation->run() === true) {
 			//Verify if exists other customer with same name or other
 			$test= $this->model_customers->getCustomersDataByName($varTest);
@@ -140,7 +140,6 @@ class Customers extends Admin_Controller
 		
 		}  else {
 			$response['success'] = false;
-			$errors= array(validation_errors());
 			foreach ($_POST as $key => $value) {
         		$response['messages'][$key] = form_error($key);
         	}				

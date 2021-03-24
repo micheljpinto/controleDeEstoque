@@ -10,7 +10,7 @@ class Brands extends Admin_Controller
 
 		$this->not_logged_in();
 
-		$this->data['page_title'] = 'Brands';
+		$this->data['page_title'] = 'Marcas';
 
 		$this->load->model('model_brands');
 	}
